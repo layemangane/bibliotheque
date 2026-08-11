@@ -1,5 +1,7 @@
 package org.library.bibliotheque.dto;
 
+import org.library.bibliotheque.entity.Livre;
+
 public class LivreCreationDTO {
     private String titre;
     private int anneePublication;
@@ -9,6 +11,14 @@ public class LivreCreationDTO {
 
     // Constructeur vide obligatoire pour la désérialisation JSON par Jackson
     public LivreCreationDTO() {}
+
+    public LivreCreationDTO(Livre livre) {
+        this.titre = livre.getTitre();
+        this.anneePublication = livre.getAnneePublication();
+        this.disponible = livre.isDisponible();
+        this.noteMoyenne = livre.getNoteMoyenne();
+        this.auteurId = livre.getAuteur().getId();
+    }
 
     // Getters (nécessaires pour que Jackson puisse lire les valeurs après désérialisation)
     public String getTitre() { return titre; }

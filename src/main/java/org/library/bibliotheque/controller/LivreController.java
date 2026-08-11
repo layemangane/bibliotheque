@@ -9,6 +9,7 @@ import org.library.bibliotheque.repository.AuteurRepository;
 import org.library.bibliotheque.service.BibliothequeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,6 +61,7 @@ public class LivreController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<LivreDTO> createLivre(@RequestBody LivreCreationDTO creationDTO) {
         Optional<Auteur> auteurOptional = auteurRepository.findById(creationDTO.getAuteurId());
         if (auteurOptional.isEmpty()) {
@@ -79,5 +81,24 @@ public class LivreController {
         return ResponseEntity.status(HttpStatus.CREATED).body(livreDTO);
     }
 
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<LivreDTO> updateLivre(@PathVariable Long id, @RequestBody LivreCreationDTO livreCreationDTO) {
+        Optional<Auteur> auteurOptional = auteurRepository.findById(livreCreationDTO.getAuteurId());
+        if (auteurOptional.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Livre newLivre = new Livre(
+                livreCreationDTO.getTitre(),
+                livreCreationDTO.getAnneePublication(),
+                livreCreationDTO.isDisponible(),
+                livreCreationDTO.getNoteMoyenne(),
+                auteurOptional.get()
+        );
+        Livre updatedLivre = bibliothequeService.updateLivre(id, newLivre);
+        LivreDTO livreDTO = new LivreDTO(updatedLivre);
+        return ResponseEntity.status(HttpStatus.OK).body(livreDTO);
+    }
 
 }

@@ -12,4 +12,9 @@ public class GlobalExceptionHandler extends RuntimeException {
     public ResponseEntity<String> handleLivreNonTrouve(LivreNonTrouveException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgument(IllegalArgumentException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    }
 }

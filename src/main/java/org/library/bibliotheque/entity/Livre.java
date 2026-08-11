@@ -62,6 +62,30 @@ public class Livre {
         return auteur;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public void setAnneePublication(int anneePublication) {
+        this.anneePublication = anneePublication;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
+    }
+
+    public void setNoteMoyenne(double noteMoyenne) {
+        this.noteMoyenne = noteMoyenne;
+    }
+
+    public void setAuteur(Auteur auteur) {
+        this.auteur = auteur;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass())
