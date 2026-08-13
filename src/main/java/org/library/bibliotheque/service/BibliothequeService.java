@@ -1,6 +1,5 @@
 package org.library.bibliotheque.service;
 
-import org.library.bibliotheque.dto.FindedAuteurDTO;
 import org.library.bibliotheque.entity.Auteur;
 import org.library.bibliotheque.entity.Livre;
 import org.library.bibliotheque.repository.AuteurRepository;

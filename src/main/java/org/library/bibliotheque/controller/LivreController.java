@@ -1,5 +1,6 @@
 package org.library.bibliotheque.controller;
 
+import jakarta.validation.Valid;
 import org.library.bibliotheque.dto.LivreCreationDTO;
 import org.library.bibliotheque.dto.LivreDTO;
 import org.library.bibliotheque.entity.Auteur;
@@ -62,7 +63,7 @@ public class LivreController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<LivreDTO> createLivre(@RequestBody LivreCreationDTO creationDTO) {
+    public ResponseEntity<LivreDTO> createLivre(@Valid @RequestBody LivreCreationDTO creationDTO) {
         Optional<Auteur> auteurOptional = auteurRepository.findById(creationDTO.getAuteurId());
         if (auteurOptional.isEmpty()) {
             return ResponseEntity.badRequest().build();

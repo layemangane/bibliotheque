@@ -1,12 +1,24 @@
 package org.library.bibliotheque.dto;
 
+import jakarta.validation.constraints.*;
 import org.library.bibliotheque.entity.Livre;
 
 public class LivreCreationDTO {
+
+    @NotBlank(message = "Le titre est obligatoire !")
     private String titre;
+
+    @Min(value = 1000, message = "L'année de publication doit être valide")
+    @Max(value = 2100, message = "L'année de publication doit être valide")
     private int anneePublication;
+
     private boolean disponible;
+
+    @DecimalMin(value = "0.0", message = "La note ne peut pas être négative")
+    @DecimalMax(value = "5.0", message = "La note ne peut pas dépasser 5")
     private double noteMoyenne;
+
+    @NotNull(message = "L'auteur est obligatoire")
     private Long auteurId;
 
     // Constructeur vide obligatoire pour la désérialisation JSON par Jackson

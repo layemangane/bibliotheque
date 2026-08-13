@@ -1,5 +1,6 @@
 package org.library.bibliotheque.controller;
 
+import jakarta.validation.Valid;
 import org.library.bibliotheque.dto.ConnexionDTO;
 import org.library.bibliotheque.dto.CreatedUserDTO;
 import org.library.bibliotheque.dto.InscriptionDTO;
@@ -24,7 +25,7 @@ public class AuthController {
     }
 
     @PostMapping("/inscription")
-    public ResponseEntity<CreatedUserDTO> inscription(@RequestBody InscriptionDTO inscriptionDTO) {
+    public ResponseEntity<CreatedUserDTO> inscription(@Valid @RequestBody InscriptionDTO inscriptionDTO) {
         Utilisateur savedUser = authService.inscrire(inscriptionDTO);
         CreatedUserDTO createdUserDTO = new CreatedUserDTO(savedUser.getId(), savedUser.getEmail());
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUserDTO);
@@ -35,7 +36,5 @@ public class AuthController {
         String token = authService.connecter(connexionDTO);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseTokenDTO(token));
     }
-
-
 
 }

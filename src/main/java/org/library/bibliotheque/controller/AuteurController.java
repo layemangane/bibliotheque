@@ -1,8 +1,7 @@
 package org.library.bibliotheque.controller;
 
-import org.library.bibliotheque.dto.FindedAuteurDTO;
+import org.library.bibliotheque.dto.AuteurDTO;
 import org.library.bibliotheque.entity.Auteur;
-import org.library.bibliotheque.repository.AuteurRepository;
 import org.library.bibliotheque.service.BibliothequeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +22,10 @@ public class AuteurController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<FindedAuteurDTO>> getAuteurs() {
-        List<FindedAuteurDTO> findedAuteurDTOS = bibliothequeService.findAuteurs()
+    public ResponseEntity<List<AuteurDTO>> getAuteurs() {
+        List<AuteurDTO> findedAuteurDTOS = bibliothequeService.findAuteurs()
                 .stream()
-                .map(FindedAuteurDTO::new)
+                .map(AuteurDTO::new)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(findedAuteurDTOS);
     }
