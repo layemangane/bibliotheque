@@ -1,0 +1,30 @@
+# docker-compose.yml
+services:
+  bibliotheque-db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: bibliotheque_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: motdepasse
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+  bibliotheque-app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://bibliotheque-db:5432/bibliotheque_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: motdepasse
+    depends_on:
+      - bibliotheque-db
+    develop:
+      watch:
+        - action: rebuild
+          path: .
+
+volumes:
+  postgres_data:
